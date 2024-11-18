@@ -1,6 +1,6 @@
 [project]
 name = "basic-pitch"
-version = "0.3.3"
+version = "0.4.0"
 description = "Basic Pitch, a lightweight yet powerful audio-to-MIDI converter with pitch bend detection."
 readme = "README.md"
 keywords = []
@@ -49,12 +49,24 @@ namespaces = false
 
 [project.scripts]
 basic-pitch = "basic_pitch.predict:main"
+bp-download = "basic_pitch.data.download:main"
 
 [project.optional-dependencies]
+data = [
+    "basic_pitch[tf,test]",
+    "apache_beam",
+    "mirdata",
+    "smart_open",
+    "sox",
+    "ffmpeg-python"
+]
 test = [
+	"basic_pitch[data]",
 	"coverage>=5.0.2",
 	"pytest>=6.1.1",
 	"pytest-mock",
+	"wave",
+	"mido"
 ]
 tf = [
 	"tensorflow>=2.4.1,<2.15.1; platform_system != 'Darwin'",
@@ -64,7 +76,7 @@ coreml = ["coremltools"]
 onnx = ["onnxruntime"]
 docs = ["mkdocs>=1.0.4"]
 dev = [
-	"basic_pitch[test,tf,coreml,onnx,docs]",
+	"basic_pitch[data,test,tf,coreml,onnx,docs]",
 	"mypy",
 	"tox",
 ]
